@@ -343,10 +343,8 @@
  showPushNotificationView:  It is used to show the remote notification view if notification payload is from HurreeSDK.
  
  Parameters required:
- 
- Object Index 0:  AppDelegate Reference.
- 
- Object Index 1:  Notification payload which we receive from the didReceiveRemoteNotification. It will notify that if notification is received from the HurreeSDk or not.
+
+ Object Index 0:  Notification payload which we receive from the didReceiveRemoteNotification. It will notify that if notification is received from the HurreeSDk or not.
  
  */
 
@@ -354,7 +352,7 @@
 {
     _callBackID = command.callbackId;
     
-    if ([command.arguments objectAtIndex:1] != nil && [[command.arguments objectAtIndex:1] isKindOfClass:[NSDictionary class]])
+    if ([command.arguments objectAtIndex:0] != nil && [[command.arguments objectAtIndex:0] isKindOfClass:[NSDictionary class]])
     {
         errorDict = @{@"message" : @"Valid Payload."};
         CDVPluginResult* resultMsg = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:errorDict];
