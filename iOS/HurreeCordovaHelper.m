@@ -354,30 +354,19 @@
 {
     _callBackID = command.callbackId;
     
-    if ([command.arguments objectAtIndex:0] != nil)
+    if ([command.arguments objectAtIndex:1] != nil && [[command.arguments objectAtIndex:1] isKindOfClass:[NSDictionary class]])
     {
-        if ([command.arguments objectAtIndex:1] != nil && [[command.arguments objectAtIndex:1] isKindOfClass:[NSDictionary class]])
-        {
-            errorDict = @{@"message" : @"Valid Payload."};
-            CDVPluginResult* resultMsg = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:errorDict];
-            [self.commandDelegate sendPluginResult:resultMsg callbackId:_callBackID];
-            [[HurreeCordovaHelper sharedManager].sdkInstance shownotification:[command.arguments objectAtIndex:0] notificationInfoDict:[command.arguments objectAtIndex:1]];
-        }
-        else
-        {
-            errorDict = @{@"message" : @"Invalid data for notification payload."};
-            CDVPluginResult* resultMsg = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:errorDict];
-            [self.commandDelegate sendPluginResult:resultMsg callbackId:_callBackID];
-        }
-        
+        errorDict = @{@"message" : @"Valid Payload."};
+        CDVPluginResult* resultMsg = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:errorDict];
+        [self.commandDelegate sendPluginResult:resultMsg callbackId:_callBackID];
+        [[HurreeCordovaHelper sharedManager].sdkInstance shownotification:[[UIApplication sharedApplication] delegate] notificationInfoDict:[command.arguments objectAtIndex:1]];
     }
     else
     {
-        errorDict = @{@"message" : @"Invalid application delegate."};
+        errorDict = @{@"message" : @"Invalid data for notification payload."};
         CDVPluginResult* resultMsg = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:errorDict];
         [self.commandDelegate sendPluginResult:resultMsg callbackId:_callBackID];
     }
-    
 }
 
 #pragma mark logApplication and Purchase Events
